@@ -1,2 +1,2 @@
 # cs361
-Main Program for CS 361 Class
+Main Program for CS 361 Class. Hello!
