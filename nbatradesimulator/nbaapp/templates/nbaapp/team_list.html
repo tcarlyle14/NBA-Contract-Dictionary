@@ -10,6 +10,9 @@
 {% for team in teams %}
     <li>
         <a href="{% url 'team_detail' team.id %}">{{ team.name }}</a>
+        Payroll: ${{ team.payroll|floatformat:2 }}, 
+        Payroll Available: ${{ team.payroll_available|floatformat:2 }},
+        Number Of Players: {{ team.players.count }}
         <a href="{% url 'edit_team' team.id %}">Edit</a>
         <a href="{% url 'delete_team' team.id %}" onclick="return confirm('Are you sure?');">Delete</a>
     </li>

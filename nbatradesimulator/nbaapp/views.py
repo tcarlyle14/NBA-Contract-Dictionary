@@ -27,8 +27,8 @@ def create_player(request):
     if request.method == 'POST':
         form = PlayerForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('team_list')  # Redirect to a relevant page
+            new_player = form.save()  # Save the form and get the instance of the new player
+            return redirect('team_detail', team_id=new_player.team.id)  # Redirect to the team detail page
     else:
         form = PlayerForm()
     return render(request, 'nbaapp/player_form.html', {'form': form})

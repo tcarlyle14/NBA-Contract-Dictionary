@@ -13,11 +13,15 @@ class Team(models.Model):
         try:
             settings = GlobalSettings.objects.get(id=1)  # Assuming there's a single instance
             if self.payroll > settings.salary_cap:
-                return True
+                return 'Yes'
             else:
-                return False
+                return 'No'
         except GlobalSettings.DoesNotExist:
             return None
+    @property
+    def payroll_available(self):
+        settings = GlobalSettings.objects.get(id=1)
+        return settings.salary_cap - self.payroll
 
 class Player(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='players')
