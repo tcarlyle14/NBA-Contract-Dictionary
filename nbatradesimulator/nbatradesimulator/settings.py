@@ -122,6 +122,3 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-# Custom settings for nbatradesimulator project
-NBA_SALARY_CAP = 188931000  # NBA Salary Cap in dollars

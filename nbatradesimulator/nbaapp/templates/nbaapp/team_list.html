@@ -1,5 +1,11 @@
 <a href="{% url 'home' %}">back</a>  <!-- Link to the homepage -->
 <h1>Teams</h1>
+{% if salary_cap %}
+        <h2>Salary Cap: ${{ salary_cap }}</h2>
+    {% else %}
+        <h2>Salary Cap: Not Set</h2>
+    {% endif %}
+    <a href="{% url 'edit_salary_cap' %}">Edit Salary Cap</a>
 <ul>
 {% for team in teams %}
     <li>

@@ -1,9 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Team, Player
-from .forms import TeamForm, PlayerForm
+from .models import Team, Player, GlobalSettings
+from .forms import TeamForm, PlayerForm, GlobalSettingsForm
 def team_list(request):
     teams = Team.objects.all()
-    return render(request, 'nbaapp/team_list.html', {'teams': teams})
+    settings, created = GlobalSettings.objects.get_or_create(id=1, defaults={'salary_cap': 188931000})
+    salary_cap = settings.salary_cap
+    return render(request, 'nbaapp/team_list.html', {'teams': teams, 'salary_cap': salary_cap})
 def team_detail(request, team_id):
     team = get_object_or_404(Team, id=team_id)
     return render(request, 'nbaapp/team_detail.html', {'team': team})
@@ -63,3 +65,13 @@ def delete_player(request, player_id):
         player.delete()
         return redirect('team_detail', team_id=team_id)
     return render(request, 'nbaapp/confirm_delete_player.html', {'player': player})
+def edit_salary_cap(request):
+    settings, created = GlobalSettings.objects.get_or_create(id=1, defaults={'salary_cap': 188931000})
+    if request.method == 'POST':
+        form = GlobalSettingsForm(request.POST, instance=settings)
+        if form.is_valid():
+            form.save()
+            return redirect('team_list')  # Redirect back to the team list page after saving
+    else:
+        form = GlobalSettingsForm(instance=settings)
+    return render(request, 'nbaapp/edit_salary_cap.html', {'form': form})

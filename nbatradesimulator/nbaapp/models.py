@@ -10,10 +10,14 @@ class Team(models.Model):
         return sum(player.salary for player in self.players.all())
     @property
     def is_over_cap(self):
-        if self.payroll > settings.NBA_SALARY_CAP:
-            return True
-        else:
-            return False
+        try:
+            settings = GlobalSettings.objects.get(id=1)  # Assuming there's a single instance
+            if self.payroll > settings.salary_cap:
+                return True
+            else:
+                return False
+        except GlobalSettings.DoesNotExist:
+            return None
 
 class Player(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='players')
@@ -24,3 +28,10 @@ class Player(models.Model):
     years_experience = models.IntegerField()
     def __str__(self):
         return self.name
+    
+class GlobalSettings(models.Model):
+    salary_cap = models.DecimalField(max_digits=12, decimal_places=2, default=188931000)
+    def __str__(self):
+        return "Global Settings"
+    class Meta:
+        verbose_name_plural = "Global Settings"
