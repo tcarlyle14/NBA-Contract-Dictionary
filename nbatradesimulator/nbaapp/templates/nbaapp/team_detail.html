@@ -1,0 +1,19 @@
+<a href="{% url 'team_list' %}">back</a>
+<h1>{{ team.name }}</h1>
+<p>Salary Cap: {{ team.salary_cap }}</p>
+<p>Payroll: {{ team.payroll }}</p>
+<p>Over Cap: {{ team.is_over_cap }}</p>
+<h2>Players</h2>
+<ul>
+    {% for player in team.players.all %}
+    <li>
+        <a href="{% url 'player_detail' player.id %}">{{ player.name }}</a> - {{ player.position }}
+        <a href="{% url 'edit_player' player.id %}">Edit</a>
+        <a href="{% url 'delete_player' player.id %}" onclick="return confirm('Are you sure?');">Delete</a>
+    </li>
+    </li>
+{% endfor %}
+</ul>
+<h3>
+    <a href="{% url 'create_player' %}">Add New Player</a>
+</h3>
