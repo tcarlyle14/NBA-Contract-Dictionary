@@ -1,21 +1,53 @@
-<a href="{% url 'home' %}">back</a>  <!-- Link to the homepage -->
+{% load static %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/team_list.css' %}">
+</head>
+<a href="{% url 'home' %}"><--</a>  <!-- Link to the homepage -->
 <h1>Teams</h1>
 {% if salary_cap %}
-        <h2>Salary Cap: ${{ salary_cap }}</h2>
-    {% else %}
-        <h2>Salary Cap: Not Set</h2>
-    {% endif %}
-    <a href="{% url 'edit_salary_cap' %}">Edit Salary Cap</a>
-<ul>
-{% for team in teams %}
-    <li>
-        <a href="{% url 'team_detail' team.id %}">{{ team.name }}</a>
-        Payroll: ${{ team.payroll|floatformat:2 }}, 
-        Payroll Available: ${{ team.payroll_available|floatformat:2 }},
-        Number Of Players: {{ team.players.count }}
-        <a href="{% url 'edit_team' team.id %}">Edit</a>
-        <a href="{% url 'delete_team' team.id %}" onclick="return confirm('Are you sure?');">Delete</a>
-    </li>
-{% endfor %}
-</ul>
+    <h3>Salary Cap: ${{ salary_cap }}</h3>
+{% else %}
+    <h3>Salary Cap: Not Set</h3>
+{% endif %}
+<a href="{% url 'edit_salary_cap' %}">Edit Salary Cap</a>
+<table>
+    <thead>
+        <tr>
+            <th>Logo</th>
+            <th>Team</th>
+            <th>Payroll</th>
+            <th>Payroll Available</th>
+            <th>Number Of Players</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for team in teams %}
+        <tr>
+            <td>
+                {% if team.name == "Atlanta Hawks" %}
+                    <img src="{% static 'images/atl.png' %}" alt="ATL" height="30">
+                {% elif team.name == "Boston Celtics" %}
+                    <img src="{% static 'images/bos.png' %}" alt="BOS" height="30">
+                {% elif team.name == "Minnesota Timberwolves" %}
+                    <img src="{% static 'images/min.png' %}" alt="MIN" height="30">
+                {% elif team.name == "Los Angeles Lakers" %}
+                    <img src="{% static 'images/lal.png' %}" alt="LAL" height="30">
+                {% else %}
+                    <img src="{% static 'images/National_Basketball_Association_logo.png' %}" alt="Default" height="30">
+                {% endif %}
+            </td>
+            <td>{{ team.name }}</td>
+            <td>${{ team.payroll|floatformat:2 }}</td>
+            <td>${{ team.payroll_available|floatformat:2 }}</td>
+            <td>{{ team.players.count }}</td>
+            <td>
+                <a href="{% url 'team_detail' team.id %}">View Team</a>
+                <a href="{% url 'edit_team' team.id %}">Edit</a>
+                <a href="{% url 'delete_team' team.id %}" onclick="return confirm('Are you sure?');">Delete</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
 <a href="{% url 'create_team' %}">Add New Team</a>

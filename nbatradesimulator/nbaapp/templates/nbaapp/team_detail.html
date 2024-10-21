@@ -1,20 +1,37 @@
-<a href="{% url 'team_list' %}">back</a>
+{% load static %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/team_detail.css' %}">
+</head>
+<a href="{% url 'team_list' %}"><--</a>
 <h1>{{ team.name }}</h1>
-<p>Payroll: {{ team.payroll }}</p>
+<p>Payroll: ${{ team.payroll }}</p>
 <p>Over Cap: {{ team.is_over_cap }}</p>
-<p>Payroll Available: ${{ team.payroll_available|floatformat:2 }}
-</p>
+<p>Payroll Available: ${{ team.payroll_available|floatformat:2 }}</p>
 <h2>Players</h2>
-<ul>
-    {% for player in team.players.all %}
-    <li>
-        <a href="{% url 'player_detail' player.id %}">{{ player.name }}</a> - Salary: ${{ player.salary | floatformat:2 }}, Postion: {{ player.position }}
-        <a href="{% url 'edit_player' player.id %}">Edit</a>
-        <a href="{% url 'delete_player' player.id %}" onclick="return confirm('Are you sure?');">Delete</a>
-    </li>
-    </li>
-{% endfor %}
-</ul>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Salary</th>
+            <th>Position</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for player in team.players.all %}
+        <tr>
+            <td>{{ player.name }}</td>
+            <td>${{ player.salary | floatformat:2 }}</td>
+            <td>{{ player.position }}</td>
+            <td>
+                <a href="{% url 'player_detail' player.id %}">View Player</a>
+                <a href="{% url 'edit_player' player.id %}">Edit</a>
+                <a href="{% url 'delete_player' player.id %}" onclick="return confirm('Are you sure?');">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 <h3>
     <a href="{% url 'create_player' %}">Add New Player</a>
 </h3>

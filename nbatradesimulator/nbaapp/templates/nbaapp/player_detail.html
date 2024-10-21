@@ -1,4 +1,8 @@
-<a href="{% url 'team_detail' player.team.id %}">back</a>
+{% load static %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/player_detail.css' %}">
+</head>
+<a href="{% url 'team_detail' player.team.id %}"><--</a>
 <h1>{{ player.name }}</h1>
 <p>Team: <a href="{% url 'team_detail' player.team.id %}">{{ player.team.name }}</a></p>
 <p>Salary: ${{ player.salary }}</p>

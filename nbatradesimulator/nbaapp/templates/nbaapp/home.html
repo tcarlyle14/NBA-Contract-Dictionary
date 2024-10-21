@@ -1,12 +1,26 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>NBA Trade Simulator</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
 <body>
-    <h1>Welcome to the NBA Trade Simulator</h1>
-    <p>This is a mock NBA trade simulator where you can manage teams and players.</p>
-    <a href="{% url 'team_list' %}">View Teams</a>
+    <img src="{% static 'images/National_Basketball_Association_logo.png' %}" alt="NBA Logo" height="300">
+    <h1>Welcome to the NBA Trade Simulator!</h1>
+    <h3>
+        What is this?
+    </h3>
+    <p>
+        The National Basketball Association (NBA) is a professional basketball league in the United States that currently consists of 30 teams. Each team has approximately 12-18 players on its roster at any given time, and players are signed to teams through monetary contracts. The total sum of player contracts for a team per year cannot exceed the NBA salary cap, which is currently set at $188,931,000. This salary cap changes annually, providing teams with more flexibility as the years go on.
+    </p>
+    <h3>
+        What is it&#39s purpose? How do I use it?
+    </h3>
+    <p>
+        This program provides a simulation of team roster building, allowing users to keep track of player rosters by adding, removing, and trading players among all 30 teams. Users can also adjust the salary cap, which will impact the amount a team can pay new players that are added to the team. To begin, tap the START button and follow the prompts to view different players and teams, as well as the options to add, remove, or trade players.
+    </p>
+    <a href="{% url 'team_list' %}">START</a>
 </body>
 </html>
