@@ -1,11 +1,12 @@
 {% load static %}
+{% load humanize %}
 <head>
     <link rel="stylesheet" href="{% static 'css/team_list.css' %}">
 </head>
 <a href="{% url 'home' %}"><--</a>  <!-- Link to the homepage -->
 <h1>Teams</h1>
 {% if salary_cap %}
-    <h3>Salary Cap: ${{ salary_cap }}</h3>
+    <h3>Salary Cap: ${{ salary_cap|intcomma }}</h3>
 {% else %}
     <h3>Salary Cap: Not Set</h3>
 {% endif %}
@@ -29,22 +30,74 @@
                     <img src="{% static 'images/atl.png' %}" alt="ATL" height="30">
                 {% elif team.name == "Boston Celtics" %}
                     <img src="{% static 'images/bos.png' %}" alt="BOS" height="30">
-                {% elif team.name == "Minnesota Timberwolves" %}
-                    <img src="{% static 'images/min.png' %}" alt="MIN" height="30">
+                {% elif team.name == "Brooklyn Nets" %}
+                    <img src="{% static 'images/bk.png' %}" alt="bk" height="30">
+                {% elif team.name == "Charlotte Hornets" %}
+                    <img src="{% static 'images/cha.png' %}" alt="cha" height="30">
+                {% elif team.name == "Chicago Bulls" %}
+                    <img src="{% static 'images/chi.png' %}" alt="chi" height="30">
+                {% elif team.name == "Cleveland Cavaliers" %}
+                    <img src="{% static 'images/cle.png' %}" alt="cle" height="30">
+                {% elif team.name == "Dallas Mavericks" %}
+                    <img src="{% static 'images/dal.png' %}" alt="DAL" height="30">
+                {% elif team.name == "Denver Nuggets" %}
+                    <img src="{% static 'images/den.png' %}" alt="den" height="30">
+                {% elif team.name == "Detroit Pistons" %}
+                    <img src="{% static 'images/det.png' %}" alt="det" height="30">
+                {% elif team.name == "Golden State Warriors" %}
+                    <img src="{% static 'images/gs.png' %}" alt="gs" height="30">
+                {% elif team.name == "Houston Rockets" %}
+                    <img src="{% static 'images/hou.png' %}" alt="hou" height="30">
+                {% elif team.name == "Indiana Pacers" %}
+                    <img src="{% static 'images/ind.png' %}" alt="IND" height="30">
+                {% elif team.name == "Los Angeles Clippers" %}
+                    <img src="{% static 'images/lac.png' %}" alt="LAC" height="30">
                 {% elif team.name == "Los Angeles Lakers" %}
                     <img src="{% static 'images/lal.png' %}" alt="LAL" height="30">
+                {% elif team.name == "Memphis Grizzlies" %}
+                    <img src="{% static 'images/mem.png' %}" alt="MEM" height="30">
+                {% elif team.name == "Miami Heat" %}
+                    <img src="{% static 'images/mia.png' %}" alt="MIA" height="30">
+                {% elif team.name == "Milwaukee Bucks" %}
+                    <img src="{% static 'images/mil.png' %}" alt="MIL" height="30">
+                {% elif team.name == "Minnesota Timberwolves" %}
+                    <img src="{% static 'images/min.png' %}" alt="MIN" height="30">
+                {% elif team.name == "New Orleans Pelicans" %}
+                    <img src="{% static 'images/no.png' %}" alt="NO" height="30">
+                {% elif team.name == "New York Knicks" %}
+                    <img src="{% static 'images/ny.png' %}" alt="NY" height="30">
+                {% elif team.name == "Oklahoma City Thunder" %}
+                    <img src="{% static 'images/okc.png' %}" alt="OKC" height="30">
+                {% elif team.name == "Orlando Magic" %}
+                    <img src="{% static 'images/orl.png' %}" alt="ORL" height="30">
+                {% elif team.name == "Philadelphia 76ers" %}
+                    <img src="{% static 'images/phi.png' %}" alt="PHI" height="30">
+                {% elif team.name == "Phoenix Suns" %}
+                    <img src="{% static 'images/phx.png' %}" alt="PHX" height="30">
+                {% elif team.name == "Portland Trail Blazers" %}
+                    <img src="{% static 'images/por.png' %}" alt="POR" height="30">
+                {% elif team.name == "Sacramento Kings" %}
+                    <img src="{% static 'images/sac.png' %}" alt="SAC" height="30">
+                {% elif team.name == "San Antonio Spurs" %}
+                    <img src="{% static 'images/san.png' %}" alt="SAN" height="30">
+                {% elif team.name == "Toronto Raptors" %}
+                    <img src="{% static 'images/tor.png' %}" alt="TOR" height="30">
+                {% elif team.name == "Utah Jazz" %}
+                    <img src="{% static 'images/ut.png' %}" alt="UT" height="30">
+                {% elif team.name == "Washington Wizards" %}
+                    <img src="{% static 'images/was.png' %}" alt="WAS" height="30">
                 {% else %}
                     <img src="{% static 'images/National_Basketball_Association_logo.png' %}" alt="Default" height="30">
                 {% endif %}
             </td>
             <td>{{ team.name }}</td>
-            <td>${{ team.payroll|floatformat:2 }}</td>
-            <td>${{ team.payroll_available|floatformat:2 }}</td>
+            <td>${{ team.payroll|intcomma }}</td>
+            <td>${{ team.payroll_available|intcomma }}</td>
             <td>{{ team.players.count }}</td>
             <td>
                 <a href="{% url 'team_detail' team.id %}">View Team</a>
                 <a href="{% url 'edit_team' team.id %}">Edit</a>
-                <a href="{% url 'delete_team' team.id %}" onclick="return confirm('Are you sure?');">Delete</a>
+                <a href="{% url 'delete_team' team.id %}">Remove</a>
             </td>
         </tr>
     {% endfor %}

@@ -1,10 +1,13 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Edit Salary Cap</title>
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
 </head>
 <body>
+    <a href="{% url 'team_list' %}"><--</a>
     <h1>Edit Salary Cap</h1>
     <form method="post">
         {% csrf_token %}

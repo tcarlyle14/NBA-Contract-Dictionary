@@ -1,12 +1,13 @@
 {% load static %}
+{% load humanize %}
 <head>
     <link rel="stylesheet" href="{% static 'css/team_detail.css' %}">
 </head>
 <a href="{% url 'team_list' %}"><--</a>
 <h1>{{ team.name }}</h1>
-<p>Payroll: ${{ team.payroll }}</p>
+<p>Payroll: ${{ team.payroll|intcomma }}</p>
 <p>Over Cap: {{ team.is_over_cap }}</p>
-<p>Payroll Available: ${{ team.payroll_available|floatformat:2 }}</p>
+<p>Payroll Available: ${{ team.payroll_available|intcomma }}</p>
 <h2>Players</h2>
 <table>
     <thead>
@@ -21,12 +22,12 @@
         {% for player in team.players.all %}
         <tr>
             <td>{{ player.name }}</td>
-            <td>${{ player.salary | floatformat:2 }}</td>
+            <td>${{ player.salary|intcomma }}</td>
             <td>{{ player.position }}</td>
             <td>
                 <a href="{% url 'player_detail' player.id %}">View Player</a>
                 <a href="{% url 'edit_player' player.id %}">Edit</a>
-                <a href="{% url 'delete_player' player.id %}" onclick="return confirm('Are you sure?');">Delete</a>
+                <a href="{% url 'delete_player' player.id %}" >Remove</a>
             </td>
         </tr>
         {% endfor %}

@@ -1,12 +1,14 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create Team</title>
+    <title>Add/Edit Team</title>
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
 </head>
 <body>
-    <a href="{% url 'team_list' %}">back</a>
-    <h1>Create Team</h1>
+    <a href="{% url 'team_list' %}"><--</a>
+    <h1>Add/Edit Team</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}

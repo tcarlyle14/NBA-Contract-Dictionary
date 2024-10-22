@@ -1,11 +1,16 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Delete Player</title>
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
 </head>
 <body>
-    <h1>Are you sure you want to delete {{ player.name }}?</h1>
+    <h1>Are you sure you want to remove {{ player.name }} from the {{ player.team.name }}?</h1>
+    <h3>
+        Removing this player will result in the permanent loss of player data.
+    </h3>
     <form method="post">
         {% csrf_token %}
         <button type="submit">Confirm</button>

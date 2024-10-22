@@ -1,13 +1,15 @@
 {% load static %}
+{% load humanize %}
+
 <head>
     <link rel="stylesheet" href="{% static 'css/player_detail.css' %}">
 </head>
 <a href="{% url 'team_detail' player.team.id %}"><--</a>
 <h1>{{ player.name }}</h1>
 <p>Team: <a href="{% url 'team_detail' player.team.id %}">{{ player.team.name }}</a></p>
-<p>Salary: ${{ player.salary }}</p>
+<p>Salary: ${{ player.salary|intcomma }}</p>
 <p>Position: {{ player.position }}</p>
 <p>College: {{ player.college }}</p>
 <p>Years of Experience: {{ player.years_experience }}</p>
-<a href="{% url 'edit_player' player.id %}">Edit</a>
-<a href="{% url 'delete_player' player.id %}" onclick="return confirm('Are you sure you want to delete this player?');">Delete</a>
+<a href="{% url 'edit_player' player.id %}">Edit Player</a>
+<a href="{% url 'delete_player' player.id %}" >Remove Player</a>

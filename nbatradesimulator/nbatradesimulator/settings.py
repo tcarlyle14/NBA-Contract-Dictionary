@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "nbaapp",
+    "django.contrib.humanize",
 ]
 
 MIDDLEWARE = [
