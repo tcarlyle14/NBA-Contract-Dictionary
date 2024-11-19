@@ -77,6 +77,7 @@ UML Sequence Diagram:
 
 
 
-![Screenshot 2024-11-18 at 11 40 06 PM](https://github.com/user-attachments/assets/5c87b117-1923-4182-a16c-3df405d7f1b8)
+<img width="705" alt="Screenshot 2024-11-19 at 12 05 59 AM" src="https://github.com/user-attachments/assets/ac39b038-e884-46c0-b10a-3dbfaf3e7105">
+
 
 
