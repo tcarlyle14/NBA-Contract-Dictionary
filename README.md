@@ -51,20 +51,20 @@ A.) How to programmatically REQUEST data from the microservice:
 To request data, a test csv file and it's path are needed. A post request containing the form data(file) is then sent to the microservice endpoint.
 Example:
 
- '''file_path = "path/to/file/test.csv"
+ ```file_path = "path/to/file/test.csv"
  url = "http://127.0.0.1:8001/validate_csv/" OR wherever microservice endpoint is.
  with open(file_path, 'rb') as file:
-            response = requests.post(url, files={'file': file})'''
+            response = requests.post(url, files={'file': file})```
 
   
 B.) How to programmatically RECEIVE data from the microservice:
 
 The response object contains the message returned by the microservice. If the response status code is anything but 200 then an error has occured.
 Example:
-'''if response.status_code == 200:
+```if response.status_code == 200:
     # Success
     data = response.json()  
 else:
     # Validation failed or an error occurred
-    error_data = response.json()'''  
+    error_data = response.json()```
 
