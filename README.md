@@ -73,3 +73,10 @@ else:
     error_data = response.json()
 ```
 
+UML Sequence Diagram:
+
+
+
+![Screenshot 2024-11-18 at 11 40 06 PM](https://github.com/user-attachments/assets/5c87b117-1923-4182-a16c-3df405d7f1b8)
+
+
