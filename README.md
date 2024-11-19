@@ -33,7 +33,7 @@ Please contact me at any point during the week. I will respond within 24 hours a
 Please contact me by 11:59 PM on Saturday 11/23/2024.
 
 
-Is there anything else your teammate needs to know? Anything you’re worried about? Any assumptions you’re making? Any other mitigations / backup plans you want to mention or want to discuss with your teammate?
+7.) Is there anything else your teammate needs to know? Anything you’re worried about? Any assumptions you’re making? Any other mitigations / backup plans you want to mention or want to discuss with your teammate?
 
 The microservice itself is a small flask app. It's purpose is to validate the uploaded CSV through http requests to ensure it's data is compatible.
 Refer to the 'requirements.txt' found at NBAtradesimulator_micros/nbatradesimulator/ & NBAtradesimulator_micros/nbatradesimulator/csv_microservice/ for dependencies needed to run the program. THe only new libraries outside existing added are 'requests' for the main program and 'flask' for the microservice.
@@ -51,20 +51,20 @@ A.) How to programmatically REQUEST data from the microservice:
 To request data, a test csv file and it's path are needed. A post request containing the form data(file) is then sent to the microservice endpoint.
 Example:
 
- file_path = "path/to/file/test.csv"
+ '''file_path = "path/to/file/test.csv"
  url = "http://127.0.0.1:8001/validate_csv/" OR wherever microservice endpoint is.
  with open(file_path, 'rb') as file:
-            response = requests.post(url, files={'file': file})
+            response = requests.post(url, files={'file': file})'''
 
   
 B.) How to programmatically RECEIVE data from the microservice:
 
 The response object contains the message returned by the microservice. If the response status code is anything but 200 then an error has occured.
 Example:
-if response.status_code == 200:
+'''if response.status_code == 200:
     # Success
     data = response.json()  
 else:
     # Validation failed or an error occurred
-    error_data = response.json()  
+    error_data = response.json()'''  
 
