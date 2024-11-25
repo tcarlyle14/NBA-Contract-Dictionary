@@ -1,0 +1,22 @@
+{% load static %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/team_list.css' %}">
+</head>
+<body>
+    <h1>Trade Players</h1>
+    
+    <!-- Display the message from the microservice -->
+    {% if message %}
+        <div class="alert alert-{{ message_type }}">
+            {{ message }}
+        </div>
+    {% endif %}
+    
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Trade</button>
+    </form>
+    
+    <a href="{% url 'team_list' %}">Back to Teams</a>
+</body>

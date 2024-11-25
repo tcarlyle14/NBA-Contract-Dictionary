@@ -4,7 +4,7 @@ from io import StringIO
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Team, Player, GlobalSettings
-from .forms import TeamForm, PlayerForm, GlobalSettingsForm
+from .forms import TeamForm, PlayerForm, GlobalSettingsForm, TradeForm
 
 def team_list(request):
     teams = Team.objects.all()
@@ -136,3 +136,37 @@ def upload_csv(request):
 
     # Handle GET request: Render the upload page
     return render(request, 'nbaapp/upload_csv.html')
+TRADE_URL = "http://127.0.0.1:8002/validate_trade/"
+def trade_players(request):
+    message = None  # Initialize message variable
+    if request.method == 'POST':
+        form = TradeForm(request.POST)
+        if form.is_valid():
+            player_a = form.cleaned_data['player_from_team_a']
+            player_b = form.cleaned_data['player_from_team_b']
+            player_a_salary = float(player_a.salary)
+            player_b_salary = float(player_b.salary)
+            try:
+                # Call the microservice to validate the trade
+                response = requests.post(TRADE_URL, json={
+                    'team_a_id': player_a.team.id,
+                    'team_b_id': player_b.team.id,
+                    'player_a_salary': player_a_salary,
+                    'player_b_salary': player_b_salary
+                })
+                # Check the response from the microservice
+                if response.status_code == 200:
+                    response_data = response.json()
+                    message = response_data.get('message') or response_data.get('error')
+                    if response_data.get('valid'):
+                        # Perform the trade if valid
+                        player_a.team, player_b.team = player_b.team, player_a.team
+                        player_a.save()
+                        player_b.save()
+                else:
+                    message = 'Error validating trade.'
+            except RequestException as e:
+                message = f"Error connecting to the microservice: {str(e)}"
+    else:
+        form = TradeForm()
+    return render(request, 'nbaapp/trade_players.html', {'form': form, 'message': message})

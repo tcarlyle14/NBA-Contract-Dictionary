@@ -15,5 +15,6 @@ urlpatterns = [
     path('edit-salary-cap/', edit_salary_cap, name='edit_salary_cap'),
     # added 
     path('upload_csv/', views.upload_csv, name='upload_csv'),
+    path('trade/', views.trade_players, name='trade_players'),
 
 ]

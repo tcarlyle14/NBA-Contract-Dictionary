@@ -51,5 +51,5 @@ def validate_csv():
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
 
 if __name__ == "__main__":
-    app.run(port=8001, debug=True)  # default microservice runs on port 8001
+    app.run(port=8001, debug=True)  # default microservice runs on port 8002
 
