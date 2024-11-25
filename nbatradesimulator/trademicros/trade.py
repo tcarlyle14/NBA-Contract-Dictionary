@@ -35,4 +35,4 @@ def validate_trade():
     except GlobalSettings.DoesNotExist:
         return jsonify({'valid': False, 'error': 'Global settings not found.'})
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8002)
+    app.run(host='0.0.0.0', port=8004)

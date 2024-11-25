@@ -170,3 +170,20 @@ def trade_players(request):
     else:
         form = TradeForm()
     return render(request, 'nbaapp/trade_players.html', {'form': form, 'message': message})
+CONVERT_MICROSERVICE_URL = "http://127.0.0.1:8004/convert_salary/"
+def player_detail(request, player_id):
+    player = get_object_or_404(Player, id=player_id)
+    conversion_result = None
+    if request.method == 'POST' and 'convert_salary' in request.POST:
+        try:
+            response = requests.post(CONVERT_MICROSERVICE_URL, json={'player_id': player.id})
+            if response.status_code == 200:
+                conversion_result = response.json()
+            else:
+                conversion_result = {'error': 'Failed to convert salary.'}
+        except requests.exceptions.RequestException as e:
+            conversion_result = {'error': f"Error connecting to the microservice: {str(e)}"}
+    return render(request, 'nbaapp/player_detail.html', {
+        'player': player,
+        'conversion_result': conversion_result
+    })

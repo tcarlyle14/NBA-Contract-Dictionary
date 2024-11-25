@@ -1,15 +1,30 @@
 {% load static %}
 {% load humanize %}
-
 <head>
     <link rel="stylesheet" href="{% static 'css/player_detail.css' %}">
 </head>
-<a href="{% url 'team_detail' player.team.id %}"><--</a>
-<h1>{{ player.name }}</h1>
-<p>Team: <a href="{% url 'team_detail' player.team.id %}">{{ player.team.name }}</a></p>
-<p>Salary: ${{ player.salary|intcomma }}</p>
-<p>Position: {{ player.position }}</p>
-<p>College: {{ player.college }}</p>
-<p>Years of Experience: {{ player.years_experience }}</p>
-<a href="{% url 'edit_player' player.id %}">Edit Player</a>
-<a href="{% url 'delete_player' player.id %}" >Remove Player</a>
+<body>
+    <a href="{% url 'team_detail' player.team.id %}">&larr; Back</a>
+    <h1>{{ player.name }}</h1>
+    <p>Team: <a href="{% url 'team_detail' player.team.id %}">{{ player.team.name }}</a></p>
+    <p>Salary: ${{ player.salary|intcomma }}</p>
+    <p>Position: {{ player.position }}</p>
+    <p>College: {{ player.college }}</p>
+    <p>Years of Experience: {{ player.years_experience }}</p>
+    <a href="{% url 'edit_player' player.id %}">Edit Player</a>
+    <a href="{% url 'delete_player' player.id %}">Remove Player</a>
+    <!-- Form to convert salary -->
+    <form method="post" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" name="convert_salary" class="link-button">Convert Salary to Euros</button>
+    </form>
+    <!-- Display conversion result -->
+    {% if conversion_result %}
+        {% if conversion_result.error %}
+            <p style="color: red;">{{ conversion_result.error }}</p>
+        {% else %}
+            <p>Salary in Euros: €{{ conversion_result.salary_eur|floatformat:2 }}</p>
+            <p>{{ conversion_result.message }}</p>
+        {% endif %}
+    {% endif %}
+</body>
