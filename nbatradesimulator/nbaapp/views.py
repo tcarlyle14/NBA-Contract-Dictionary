@@ -28,15 +28,37 @@ def create_team(request):
     else:
         form = TeamForm()
     return render(request, 'nbaapp/team_form.html', {'form': form})
+
+VERIFY_SALARY_MICROSERVICE_URL = "http://127.0.0.1:8005/verify_salary/"
 def create_player(request):
     if request.method == 'POST':
         form = PlayerForm(request.POST)
         if form.is_valid():
-            new_player = form.save()  # Save the form and get the instance of the new player
-            return redirect('team_detail', team_id=new_player.team.id)  # Redirect to the team detail page
+            player = form.save(commit=False)  # Don't save to the database yet
+            try:
+                # Call the microservice to verify the salary
+                response = requests.post(VERIFY_SALARY_MICROSERVICE_URL, json={
+                    'team_id': player.team.id,
+                    'new_player_salary': float(player.salary)
+                })
+                if response.status_code == 200:
+                    response_data = response.json()
+                    if response_data.get('valid'):
+                        player.save()  # Save the player if the salary is valid
+                        return redirect('team_detail', team_id=player.team.id)
+                    else:
+                        # Add the error message from the microservice to the form
+                        form.add_error(None, response_data.get('error'))
+                else:
+                    # Handle unexpected response status codes
+                    form.add_error(None, 'Error verifying salary: Unexpected response from microservice.')
+            except requests.exceptions.RequestException as e:
+                # Handle connection errors
+                form.add_error(None, f"Error connecting to the microservice: {str(e)}")
     else:
         form = PlayerForm()
     return render(request, 'nbaapp/player_form.html', {'form': form})
+
 def edit_team(request, team_id):
     team = get_object_or_404(Team, pk=team_id)
     if request.method == 'POST':
