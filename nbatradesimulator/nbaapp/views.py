@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Team, Player, GlobalSettings
 from .forms import TeamForm, PlayerForm, GlobalSettingsForm, TradeForm
+from requests.exceptions import RequestException
 
 def team_list(request):
     teams = Team.objects.all()
